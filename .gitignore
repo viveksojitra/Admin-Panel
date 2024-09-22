@@ -1,5 +1,5 @@
 node_modules
-billing.ejs
-rtl.ejs
-tables.ejs
-virtual-reality.ejs
+views/billing.ejs
+views/rtl.ejs
+views/tables.ejs
+views/virtual-reality.ejs
