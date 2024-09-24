@@ -97,20 +97,24 @@ const saltRounds = 10;
 // };
 
 // DEFAULT CONTROLLER
-const defaultController = (req, res) => {
+const defaultController = async (req, res) => {
   try {
     if (!req.cookies.userId) {
-
       return res.redirect('/signup');
-
     } else {
+      const user = await User.findOne({ _id: req.cookies.userId }).select('name'); // Fetch only the 'name' field
 
-      return res.render('dashboard', { username: req.cookies.username });
+      if (!user) {
+        return res.redirect('/signup');
+      }
+
+      return res.render('dashboard', { username: user.name });
     }
   } catch (err) {
     console.error('Error loading dashboard:', err);
   }
 };
+
 
 // USER CONTROLLERS/
 // Register controller
@@ -152,12 +156,10 @@ const registerPostController = async (req, res) => {
     await newUser.save();
 
     const userId = newUser._id.toString();
-    const username = newUser.name;
     res.cookie('userId', userId);
-    res.cookie('username', username);
 
     // Set cookie
-    cookieController.setCookie(req, res, userId, username);
+    cookieController.setCookie(req, res, userId);
 
     console.log('User has been registered!');
     return res.redirect('/signin');
@@ -203,12 +205,10 @@ const loginPostController = async (req, res) => {
 
     // Set cookie with user ID
     const userId = user._id.toString();
-    const username = user.name;
     res.cookie('userId', userId);
-    res.cookie('username', username);
 
     // Set cookie
-    cookieController.setCookie(req, res, userId, username);
+    cookieController.setCookie(req, res, userId);
 
     // Redirect to dashboard
     console.log('User logged in successfully:', user);
@@ -228,9 +228,20 @@ const logoutController = (req, res) => {
 }
 
 // User Profile
-const dashboardController = (req, res) => {
-  res.render('dashboard', { username: req.cookies.username });
-}
+const dashboardController = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.cookies.userId }).select('name');
+
+    if (!user) {
+      return res.redirect('/signup');
+    }
+
+    res.render('dashboard', { username: user.name });
+  } catch (err) {
+    console.error('Error loading dashboard:', err);
+  }
+};
+
 
 const profileController = (req, res) => {
   res.render('profile');

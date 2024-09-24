@@ -1,19 +1,13 @@
 // Cookie
 // Set a cookie
-const setCookie = (req, res, userId, name) => {
+const setCookie = (req, res, userId) => {
     res.cookie('userId', userId, {
         httpOnly: false,
         secure: false,
         maxAge: 900000,
         path: '/',
     });
-    res.cookie('username', name, {
-        httpOnly: false,
-        secure: false,
-        maxAge: 900000,
-        path: '/',
-    });
-    console.log('User cookie has been set:', userId, name);
+    console.log('User cookie has been set:', userId);
     console.log('User cookie:', req.cookies['user']);
 };
 
