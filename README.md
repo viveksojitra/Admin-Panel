@@ -1,6 +1,6 @@
 # 🛠️ Admin-Panel Website
 
-A robust and secure Admin-Panel Website designed to manage backend operations with ease. This project is built using Node.js, Express, MongoDB, and EJS, and showcases key features like user authentication, profile management, and a dynamic dashboard.
+A robust Admin-Panel Website designed to manage backend operations with ease. This project is built using Node.js, Express, MongoDB, and EJS, and showcases key features like user authentication, profile management, and a dynamic dashboard.
 
 ## 📑 Features
 
@@ -21,19 +21,30 @@ A robust and secure Admin-Panel Website designed to manage backend operations wi
 
 ## 🎞 Demo Video
 
+https://github.com/user-attachments/assets/69e98d78-8000-4760-9fa7-e718eb9395ff
+
 ## 🎥 Preview
 
 _Preview images and videos of the project will be here._
+![Registration]
+![Registration](https://github.com/user-attachments/assets/9b779fd3-baa6-44b7-8cf1-27d565e98736)
 
-![Dashboard Screenshot](path-to-your-image)
-![Profile Page Screenshot](path-to-your-image)
+![Sign-in]
+![Signin](https://github.com/user-attachments/assets/582d92d0-dc6f-4203-ae00-2106ef095ada)
+
+![Dashboard]
+![Dashboard](https://github.com/user-attachments/assets/41654f3b-f55c-4f8f-8855-222c4b55cba3)
+
+![Profile Page]
+![Profile](https://github.com/user-attachments/assets/49dc3683-95a8-4c86-a72f-82805e0e3d74)
+
 
 ## 🛠️ Tech Stack
 
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB, Mongoose
 - **Frontend:** EJS, Bootstrap 5
-- **File Uploads:** Multer
+- **File Uploads:** Multer [ will implemented soon ].
 - **Dev Tools:** Nodemon, Body-parser
 
 ## 📦 Installation
