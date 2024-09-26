@@ -10,6 +10,8 @@ const User = require('./model/userModel');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
+const passport = require('./config/passport')
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, "/views"));
 
@@ -21,6 +23,18 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // app.use('/storage', express.static(path.join(__dirname, 'storage')));
+
+app.use(require('express-session')({
+    secret: 'godmod',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: false,
+    }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', router);
 

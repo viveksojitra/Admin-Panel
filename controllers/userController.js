@@ -102,7 +102,7 @@ const defaultController = async (req, res) => {
     if (!req.cookies.userId) {
       return res.redirect('/signup');
     } else {
-      const user = await User.findOne({ _id: req.cookies.userId }).select('name'); // Fetch only the 'name' field
+      const user = await User.findOne({ _id: req.cookies.userId }).select('name');
 
       if (!user) {
         return res.redirect('/signup');
@@ -175,49 +175,65 @@ const loginController = (req, res) => {
 }
 
 // Login post controller
-const loginPostController = async (req, res) => {
-  const { email, password } = req.body;
+// const loginPostController = async (req, res) => {
+//   const { email, password } = req.body;
 
-  // Check if email and password are provided
-  if (!email || !password) {
-    console.log('Email and password are required');
-    return res.redirect('/signin');
-  }
+//   // Check if email and password are provided
+//   if (!email || !password) {
+//     console.log('Email and password are required');
+//     return res.redirect('/signin');
+//   }
 
-  try {
-    // Find user by email
-    const user = await User.findOne({ email });
+//   try {
+//     // Find user by email
+//     const user = await User.findOne({ email });
 
-    // Check if user exists
-    if (!user) {
-      console.log('User does not exist! Please Register First.');
-      return res.redirect('/signup');
-    }
+//     // Check if user exists
+//     if (!user) {
+//       console.log('User does not exist! Please Register First.');
+//       return res.redirect('/signup');
+//     }
 
-    // Compare passwords
-    const isMatch = await bcrypt.compare(password, user.password);
+//     // Compare passwords
+//     const isMatch = await bcrypt.compare(password, user.password);
 
-    // Check if passwords match
-    if (!isMatch) {
-      console.log('Incorrect password!');
-      return res.redirect('/signin');
-    }
+//     // Check if passwords match
+//     if (!isMatch) {
+//       console.log('Incorrect password!');
+//       return res.redirect('/signin');
+//     }
 
-    // Set cookie with user ID
-    const userId = user._id.toString();
-    res.cookie('userId', userId);
+//     // Set cookie with user ID
+//     const userId = user._id.toString();
+//     res.cookie('userId', userId);
 
-    // Set cookie
-    cookieController.setCookie(req, res, userId);
+//     // Set cookie
+//     cookieController.setCookie(req, res, userId);
 
-    // Redirect to dashboard
-    console.log('User logged in successfully:', user);
-    res.redirect('/');
-  } catch (error) {
-    console.log('Error logging in user:', error);
-    res.redirect('/signin');
-  }
-}
+//     // Redirect to dashboard
+//     console.log('User logged in successfully:', user);
+//     res.redirect('/');
+//   } catch (error) {
+//     console.log('Error logging in user:', error);
+//     res.redirect('/signin');
+//   }
+// }
+
+// Login post controller
+const loginPostController = (req, res) => {
+
+  const userId = req.user._id.toString();
+  res.cookie('userId', userId);
+
+  // Set Cookie
+  cookieController.setCookie(req, res, userId);
+
+  // Redirect to dashboard
+  console.log('User logged in successfully:', req.user);
+  res.redirect('/');
+
+  console.log('User has been logged in!');
+};
 
 // Logout controller
 const logoutController = (req, res) => {
@@ -241,7 +257,6 @@ const dashboardController = async (req, res) => {
     console.error('Error loading dashboard:', err);
   }
 };
-
 
 const profileController = (req, res) => {
   res.render('profile');

@@ -3,6 +3,7 @@
 // const filesController = require('../controllers/filesController');
 // const upload = require('../multer_config/mConfig');
 const cookieController = require('../controllers/cookieController');
+const passport = require('../config/passport.js')
 
 // // Routes
 // router.get('/', filesController.getHomePage);
@@ -24,7 +25,9 @@ router.get('/', controllers.defaultController);
 router.get('/signup', controllers.registerController);
 router.post('/signupPost', controllers.registerPostController);
 router.get('/signin', controllers.loginController);
-router.post('/signinPost', controllers.loginPostController);
+
+router.post('/signinPost', passport.authenticate('local', { failureRedirect: '/signin' }), controllers.loginPostController);
+
 router.get('/logout', controllers.logoutController);
 
 // User Profile
