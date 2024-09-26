@@ -1,7 +1,7 @@
 const isAuthenticated = (req, res, next) => {
 
     if (req.isAuthenticated()) {
-        console.log("Authenticated user:", req.user);
+        console.log("User authenticated:", req.user);
         return next();
     }
 

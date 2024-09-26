@@ -115,13 +115,11 @@ const defaultController = async (req, res) => {
   }
 };
 
-
 // USER CONTROLLERS/
 // Register controller
 const registerController = (req, res) => {
   return res.render('sign-up');
 };
-
 
 const registerPostController = async (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
@@ -236,12 +234,20 @@ const loginPostController = (req, res) => {
 };
 
 // Logout controller
-const logoutController = (req, res) => {
-  res.clearCookie('userId');
-  res.redirect('/signin');
+const logoutController = (req, res, next) => {
 
-  console.log('User has been logged out!');
-}
+  res.clearCookie('userId');
+
+  req.logout((err) => {
+    if (err) {
+      console.error('Logout error:', err);
+      return next(err);
+    }
+
+    console.log('User has been logged out!');
+    res.redirect('/signin');
+  });
+};
 
 // User Profile
 const dashboardController = async (req, res) => {

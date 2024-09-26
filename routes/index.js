@@ -1,9 +1,11 @@
-// const express = require('express');
-// const router = express.Router();
+const express = require('express');
+const router = express.Router();
 // const filesController = require('../controllers/filesController');
 // const upload = require('../multer_config/mConfig');
 const cookieController = require('../controllers/cookieController');
 const passport = require('../config/passport.js')
+const controllers = require('../controllers/userController');
+const isAuthenticated = require('../config/isAuth');
 
 // // Routes
 // router.get('/', filesController.getHomePage);
@@ -14,9 +16,6 @@ const passport = require('../config/passport.js')
 
 // module.exports = router;
 
-const express = require('express');
-const router = express.Router();
-const controllers = require('../controllers/userController');
 
 // Default route
 router.get('/', controllers.defaultController);
@@ -31,8 +30,8 @@ router.post('/signinPost', passport.authenticate('local', { failureRedirect: '/s
 router.get('/logout', controllers.logoutController);
 
 // User Profile
-router.get('/dashboard', controllers.dashboardController);
-router.get('/profile', controllers.profileController);
+router.get('/dashboard', isAuthenticated, controllers.dashboardController);
+router.get('/profile', isAuthenticated, controllers.profileController);
 
 // Cookie routes
 router.get('/setcookie', cookieController.setCookie);
