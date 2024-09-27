@@ -8,7 +8,7 @@ const setCookie = (req, res, userId) => {
         path: '/',
     });
     console.log('User cookie has been set:', userId);
-    console.log('User cookie:', req.cookies['userId']);
+    console.log('User Cookie:', req.cookies['userId']);
 };
 
 // Get the cookie

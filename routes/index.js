@@ -3,8 +3,9 @@ const router = express.Router();
 // const filesController = require('../controllers/filesController');
 // const upload = require('../multer_config/mConfig');
 const cookieController = require('../controllers/cookieController');
-const passport = require('../config/passport.js')
-const controllers = require('../controllers/userController');
+const authControllers = require('../controllers/authController');
+const userControllers = require('../controllers/userController');
+const passport = require('../config/passport.js');
 const isAuthenticated = require('../config/isAuth');
 
 // // Routes
@@ -16,27 +17,23 @@ const isAuthenticated = require('../config/isAuth');
 
 // module.exports = router;
 
-
 // Default route
-router.get('/', controllers.defaultController);
+router.get('/', authControllers.defaultController);
+
+// Auth routes
+router.get('/signup', authControllers.registerController);
+router.post('/signupPost', authControllers.registerPostController);
+router.get('/signin', authControllers.loginController);
+router.post('/signinPost', passport.authenticate('local', { failureRedirect: '/signin' }), authControllers.loginPostController);
+router.get('/logout', authControllers.logoutController);
 
 // User routes
-router.get('/signup', controllers.registerController);
-router.post('/signupPost', controllers.registerPostController);
-router.get('/signin', controllers.loginController);
-
-router.post('/signinPost', passport.authenticate('local', { failureRedirect: '/signin' }), controllers.loginPostController);
-
-router.get('/logout', controllers.logoutController);
-
-// User Profile
-router.get('/dashboard', isAuthenticated, controllers.dashboardController);
-router.get('/profile', isAuthenticated, controllers.profileController);
+router.get('/profile', isAuthenticated, userControllers.profileController);
+router.get('/dashboard', isAuthenticated, userControllers.dashboardController);
 
 // Cookie routes
 router.get('/setcookie', cookieController.setCookie);
 router.get('/getcookie', cookieController.getCookie);
 router.get('/clearcookie', cookieController.clearCookie);
-
 
 module.exports = router;
