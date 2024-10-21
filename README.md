@@ -83,3 +83,7 @@ admin-panel/
 ├── index.js          # Main entry point of the app
 ├── package.json      # Project dependencies and scripts
 └── README.md         # Project documentation
+```
+
+## Partial Credit (UI):
+https://www.creative-tim.com/
